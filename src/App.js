@@ -1,11 +1,12 @@
-import './App.css';
-
+import Body from "./components/Body";
+import Header from "./components/Header";
 function App() {
   return (
-    <div className="font-bold text-2xl text-center ">
-          Hey !
+    <div className="bg-gray-700 shadow-2xl">
+        <Header/>
+        <Body/>
     </div>
   );
-}
+} 
 
 export default App;
