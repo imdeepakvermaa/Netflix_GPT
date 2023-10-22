@@ -1,12 +1,19 @@
 import { LogoUrl } from "../utils/Urls";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+  const navigate = useNavigate();
+  const navigateSignIn = () => {
+    navigate('/login');
+  };
+
   return (
   <div className="h-[700px] w-full md:h-screen md:w-screen bg-cover bg-gradient-to-r from-gray-700 to-gray-500 relative" style={{ backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),url(https://assets.nflxext.com/ffe/siteui/vlv3/a73c4363-1dcd-4719-b3b1-3725418fd91d/fe1147dd-78be-44aa-a0e5-2d2994305a13/IN-en-20231016-popsignuptwoweeks-perspective_alpha_website_large.jpg)' }}>
   
       <div className="w-full flex justify-center  items-center gap-[900px] p-4">
         <img className="h-[70px]" src={LogoUrl} alt="logo" />
-        <button className="h-8 w-20 text-center text-sm text-white font-medium bg-red-600 rounded-md">
+        <button className="h-8 w-20 text-center text-sm text-white font-medium bg-red-600 rounded-md" onClick={navigateSignIn}>
           Sign In
         </button>
       </div>
