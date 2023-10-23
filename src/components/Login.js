@@ -1,19 +1,34 @@
 import { LogoUrl } from "../utils/Urls";
 import { useNavigate } from "react-router-dom";
+import validateData from "../utils/validate";
+import { useState , useRef} from "react";
 
 const Login = () => {
+
+  const [errorMessage , setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
   const navigate = useNavigate();
   const navigateHome = () => {
     navigate('/');
   };
 
-  
+  // console.log(email);
+  // console.log(password);
 
+  const handleButtonClick = () => {
+    const emailValue = email.current.value; 
+    const passwordValue = password.current.value; 
+
+    const message = validateData(emailValue, passwordValue);
+    setErrorMessage(message);
+  };
 
   return (
     <div className=" flex flex-col justify-start items-start" >
       <div
-        className="h-[900px] cover w-full md:h-[1100px] md:w-screen bg-cover bg-gradient-to-r from-gray-700 to-gray-500 relative"
+        className="h-[1100px] w-full cover bg-cover bg-gradient-to-r from-gray-700 to-gray-500 relative"
         style={{
           backgroundImage:
             "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),url(https://assets.nflxext.com/ffe/siteui/vlv3/a73c4363-1dcd-4719-b3b1-3725418fd91d/fe1147dd-78be-44aa-a0e5-2d2994305a13/IN-en-20231016-popsignuptwoweeks-perspective_alpha_website_large.jpg)",
@@ -27,24 +42,27 @@ const Login = () => {
           <div className=" h-[640px] w-[450px] bg-black bg-opacity-70">
             <h1 className="text-white text-3xl font-medium pl-[70px] pb-[30px] pt-[50px] ">Sign In</h1>
             <div className="flex flex-col justify-center items-center">
-                  <form className="">
+                  <form onSubmit={(e) => e.preventDefault()} className="flex flex-col ">
                     <input
-                      className="w-[314px] h-[50px] bg-gray-600 rounded-md mb-4 p-4"
+                      ref={email}
+                      className="w-[314px] h-[50px] bg-gray-600 rounded-md p-4 dark:text-white"
                       type="text"
-                      name="email"
                       placeholder="Email or phone number"
                     />
+                    
                     <br />
                     <input
-                      className="w-[314px] h-[50px] bg-gray-600 rounded-md mb-10 p-4 dark:text-white"
+                    ref={password}
+                      className="w-[314px] h-[50px] bg-gray-600 rounded-md  p-4 dark:text-white"
                       type="text"
-                      name="password"
                       placeholder="Password"
                     />
-                  </form>
-                  <button className="w-[314px] h-12 text-center text-white bg-red-600 rounded-md text-lg md:text-xl font-medium dark:text-white">
+                    <p className="text-red-500 font-medium mb-10">{errorMessage}</p>
+                    <button className="w-[314px] h-12 text-center text-white bg-red-600 rounded-md text-lg md:text-xl font-medium dark:text-white" onClick={handleButtonClick}>
                     Sign In
                   </button>
+                  </form>
+                  
                   <span className="mt-2 text-gray-400 hover:underline cursor-pointer text-sm">Need help?</span>
             </div>
             
