@@ -1,28 +1,86 @@
 import { LogoUrl } from "../utils/Urls";
-import { useNavigate } from "react-router-dom";
 import validateData from "../utils/validate";
+import { auth } from "../utils/firebase";
 import { useState , useRef} from "react";
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const [errorMessage , setErrorMessage] = useState(null);
+  const [isSignInForm , setIsSignInForm] = useState(true);
 
+  const dispatch = useDispatch();
+
+
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  const navigate = useNavigate();
-  const navigateHome = () => {
-    navigate('/');
-  };
-
-  // console.log(email);
-  // console.log(password);
 
   const handleButtonClick = () => {
-    const emailValue = email.current.value; 
-    const passwordValue = password.current.value; 
+    const emailValue = email?.current?.value; 
+    const passwordValue = password?.current?.value;
+    const displayName = name?.current?.value;
+ 
 
     const message = validateData(emailValue, passwordValue);
     setErrorMessage(message);
+
+    if (message) return;
+
+    if(!isSignInForm){
+      createUserWithEmailAndPassword(auth, emailValue, passwordValue  )
+      .then((userCredential) => { 
+        const user = userCredential.user;
+        updateProfile(user, {
+          displayName: displayName , photoURL: "https://avatars.githubusercontent.com/u/111647177?v=4"
+        }).then(() => {
+          const {uid , email , displayName , photoURL} = auth.currentUser;
+              dispatch(addUser({uid: uid , email: email , displayName: displayName , photoURL: photoURL ,}));
+          navigate('/browse');
+
+        }).catch((error) => {
+          setErrorMessage(message);
+
+        });
+        console.log(user);
+        
+        navigate('/browse');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + " " +  errorMessage)
+    });
+
+    }
+
+    else{
+      signInWithEmailAndPassword(auth, emailValue, passwordValue)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        
+        navigate('/browse');
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + " " + errorMessage)
+      });
+
+    }
+  };
+
+    
+
+
+  const toggleSignUpForm = () => {
+    setIsSignInForm(!isSignInForm);
+
   };
 
   return (
@@ -35,14 +93,22 @@ const Login = () => {
         }}
       >
         <div className="w-full ml-5 mt-1">
-          <img className="h-[90px]" src={LogoUrl} alt="logo" />
+          <img className="h-[90px]" src={LogoUrl} alt="logo"/>
         </div>
 
         <div className="flex justify-center items-center">
           <div className=" h-[640px] w-[450px] bg-black bg-opacity-70">
-            <h1 className="text-white text-3xl font-medium pl-[70px] pb-[30px] pt-[50px] ">Sign In</h1>
+            <h1 className="text-white text-3xl font-medium pl-[70px] pb-[30px] pt-[50px] ">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
             <div className="flex flex-col justify-center items-center">
                   <form onSubmit={(e) => e.preventDefault()} className="flex flex-col ">
+
+                    {!isSignInForm && <input
+                      ref={name}
+                      className="w-[314px] h-[50px] bg-gray-600 rounded-md p-4 mb-6 dark:text-white"
+                      type="text"
+                      placeholder="Full Name"
+                    />}
+
                     <input
                       ref={email}
                       className="w-[314px] h-[50px] bg-gray-600 rounded-md p-4 dark:text-white"
@@ -59,7 +125,7 @@ const Login = () => {
                     />
                     <p className="text-red-500 font-medium mb-10">{errorMessage}</p>
                     <button className="w-[314px] h-12 text-center text-white bg-red-600 rounded-md text-lg md:text-xl font-medium dark:text-white" onClick={handleButtonClick}>
-                    Sign In
+                    {isSignInForm ? "Sign In" : "Sign Up"}
                   </button>
                   </form>
                   
@@ -68,8 +134,8 @@ const Login = () => {
             
             <div className="pl-[60px]">
               <div className="text-white flex flex-row mt-8">
-                <h5 className="text-gray-400">New to Netflix?</h5>
-                <h5 className="ml-1 cursor-pointer hover:underline" onClick={navigateHome}>Sign up now.</h5>
+                <h5 className="text-gray-400" >{isSignInForm ? "New to Netflix?" : "Already Registered?"}</h5>
+                <h5 className="ml-1 cursor-pointer hover:underline" onClick={toggleSignUpForm}>{isSignInForm ? "Sign Up now." : "Sign In now."}</h5>
               </div>
 
               <div className="w-[280px] text-white flex flex-row  mt-4">
