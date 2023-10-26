@@ -1,4 +1,4 @@
-import { LogoUrl } from "../utils/Urls";
+import Header from "./Header";
 import validateData from "../utils/validate";
 import { auth } from "../utils/firebase";
 import { useState , useRef} from "react";
@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword,createUserWithEmailAndPassword, updateProfil
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-
+import { ProfileImgURL } from "../utils/constants";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -18,7 +18,11 @@ const Login = () => {
 
   const name = useRef(null);
   const email = useRef(null);
-  const password = useRef(null);
+  const password = useRef(null);  
+
+  const infoPage = () => {
+    navigate('/')
+  }
 
   const handleButtonClick = () => {
     const emailValue = email?.current?.value; 
@@ -36,11 +40,11 @@ const Login = () => {
       .then((userCredential) => { 
         const user = userCredential.user;
         updateProfile(user, {
-          displayName: displayName , photoURL: "https://avatars.githubusercontent.com/u/111647177?v=4"
+          displayName: displayName , photoURL: {ProfileImgURL}
         }).then(() => {
           const {uid , email , displayName , photoURL} = auth.currentUser;
               dispatch(addUser({uid: uid , email: email , displayName: displayName , photoURL: photoURL ,}));
-          navigate('/browse');
+        
 
         }).catch((error) => {
           setErrorMessage(message);
@@ -62,9 +66,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, emailValue, passwordValue)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-        
-        navigate('/browse');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -92,11 +93,11 @@ const Login = () => {
             "linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)),url(https://assets.nflxext.com/ffe/siteui/vlv3/a73c4363-1dcd-4719-b3b1-3725418fd91d/fe1147dd-78be-44aa-a0e5-2d2994305a13/IN-en-20231016-popsignuptwoweeks-perspective_alpha_website_large.jpg)",
         }}
       >
-        <div className="w-full ml-5 mt-1">
-          <img className="h-[90px]" src={LogoUrl} alt="logo"/>
+        <div className="w-full ml-7 mt-4">
+          <Header/>
         </div>
 
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-2">
           <div className=" h-[640px] w-[450px] bg-black bg-opacity-70">
             <h1 className="text-white text-3xl font-medium pl-[70px] pb-[30px] pt-[50px] ">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
             <div className="flex flex-col justify-center items-center">
@@ -134,7 +135,7 @@ const Login = () => {
             
             <div className="pl-[60px]">
               <div className="text-white flex flex-row mt-8">
-                <h5 className="text-gray-400" >{isSignInForm ? "New to Netflix?" : "Already Registered?"}</h5>
+                <h5 className="text-gray-400 cursor-pointer" onClick={infoPage} >{isSignInForm ? "New to Netflix?" : "Already Registered?"}</h5>
                 <h5 className="ml-1 cursor-pointer hover:underline" onClick={toggleSignUpForm}>{isSignInForm ? "Sign Up now." : "Sign In now."}</h5>
               </div>
 
