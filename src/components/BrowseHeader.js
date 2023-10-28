@@ -19,7 +19,7 @@ const BrowseHeader = () => {
   return (
 
 
-    <div className="flex w-full ">
+    <div className="flex w-full">
       <div className="flex gap-6 text-sm mt-5 ml-6 text-white">
         <h4 className="font-bold">Home</h4>
         <h4>TV Shows</h4>
