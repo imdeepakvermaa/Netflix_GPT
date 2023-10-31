@@ -35,8 +35,8 @@ const Header = () => {
     return () => unsubscribe;
   }, []);
   return (
-    <div className=" z-1">
-      <img className="h-[70px]" src={LogoUrl} alt="logo" />
+    <div>
+      <img className=" h-[70px]" src={LogoUrl} alt="logo" />
     </div>
   );
 };

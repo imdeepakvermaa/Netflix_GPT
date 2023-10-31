@@ -7,7 +7,9 @@ export const HeroImage = "https://assets.nflxext.com/ffe/siteui/vlv3/a73c4363-1d
 
 
 
-export const ProfileImgURL = "https://occ-0-2152-3647.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABZsHFzVJxslQotWJfA2LtkpqTn9Z1m9hltBzc-TaiwGiSp8QF4Mv1RO0pQxfEd3gblidRQTiXqdFwbPNKZBhU_K6uRB1HbA.png?r=c1e";
+export const ProfileImgURL = "https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456";
+
+export const BgImageURL = "https://assets.nflxext.com/ffe/siteui/vlv3/a73c4363-1dcd-4719-b3b1-3725418fd91d/fe1147dd-78be-44aa-a0e5-2d2994305a13/IN-en-20231016-popsignuptwoweeks-perspective_alpha_website_large.jpg";
 
 
 

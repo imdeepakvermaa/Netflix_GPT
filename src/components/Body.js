@@ -1,9 +1,9 @@
 
 import Login from './Login';
 import Browse from './Browse';
-import Header from './MainPage';
 import { createBrowserRouter,  } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
+import MainPage from './MainPage';
 
 
 
@@ -12,7 +12,7 @@ const Body = () => {
     const appRouter = createBrowserRouter([
         {
             path: "/",
-            element: <Header/>
+            element: <MainPage/>
 
         },
         

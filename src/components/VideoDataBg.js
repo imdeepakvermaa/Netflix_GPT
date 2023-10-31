@@ -4,7 +4,7 @@ import { faPlay, faInfo } from "@fortawesome/free-solid-svg-icons";
 const VideoDataBg = ({ title, overview }) => {
   return (
     <div className="absolute flex  items-center h-[750px] text-white ">
-      <div className="px-[50px] h-screen flex flex-col justify-center  bg-gradient-to-r from-black  ">
+      <div className="px-[50px] h-screen flex flex-col justify-center   ">
         <h1 className="font-bold text-7xl">{title}</h1>
         <p className="w-1/4 mt-5">{overview}</p>
         <div className="pt-8">
