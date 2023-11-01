@@ -28,6 +28,12 @@ const Login = () => {
     navigate("/");
   };
 
+
+  const onChangeNeed = () => {
+    navigate("/in");
+  };
+
+
   const handleButtonClick = async () => {
     const emailValue = emailRef.current.value;
     const passwordValue = passwordRef.current.value;
@@ -73,7 +79,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-auto">
+    <div className="">
       <div className="flex flex-col justify-start items-start">
         <div
           className="h-[1100px] w-full cover bg-cover bg-gradient-to-r from-gray-700 to-gray-500 relative"
@@ -82,7 +88,7 @@ const Login = () => {
             `linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url(${BgImageURL})`,
           }}
         >
-          <div className="w-full ml-7 mt-4">
+          <div className=" ml-7 mt-4">
             <Link to="/">
               <Header />
             </Link>
@@ -119,7 +125,7 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                   />
-                  <p className="text-red-500 font-medium mb-10">
+                  <p className="text-red-500 font-medium mb-10 justify-center items-center">
                     {errorMessage}
                   </p>
                   <button
@@ -129,7 +135,7 @@ const Login = () => {
                     {isSignInForm ? "Sign In" : "Sign Up"}
                   </button>
                 </form>
-                <span className="mt-2 text-gray-400 hover:underline cursor-pointer text-sm">
+                <span className="mt-2 text-gray-400 hover:underline cursor-pointer text-sm" onClick={onChangeNeed}>
                   Need help?
                 </span>
               </div>
@@ -138,7 +144,7 @@ const Login = () => {
                 <div className="text-white flex flex-row mt-8">
                   <h5
                     className="text-gray-400 cursor-pointer"
-                    onClick={infoPage}
+                    onClick={onChangeNeed}
                   >
                     {isSignInForm ? "New to Netflix?" : "Already Registered?"}
                   </h5>
