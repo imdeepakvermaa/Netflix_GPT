@@ -28,7 +28,7 @@ const BrowseHeader = () => {
   };
 
   return (
-    <div className="flex bg-black">
+    <div className="flex ">
       <div className="flex gap-4 text-sm mt-5 text-white">
         <h4 className="font-bold">Home</h4>
         <h4>TV Shows</h4>
