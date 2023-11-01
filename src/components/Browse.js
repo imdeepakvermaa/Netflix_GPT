@@ -20,7 +20,7 @@ const Browse = () => {
 
     return (
 
-            <div>
+            <div className="">
                 <div className="pl-4 absolute w-full flex flex-row z-10 bg-black bg-opacity-80">
                     <Link to="/"><Header/></Link>
                     <BrowseHeader/>
